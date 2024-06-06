@@ -1,0 +1,135 @@
+@startuml
+
+    class ButtonPanel {
+        - TetrisFrame frame
+        + ButtonPanel(TetrisFrame frame)
+        - void initComponents()
+        - void jButtonResumeActionPerformed(java.awt.event.ActionEvent evt)
+        - void jButtonPauseActionPerformed(java.awt.event.ActionEvent evt)
+        - void jButtonNewGameActionPerformed(java.awt.event.ActionEvent evt)
+        - jButtonResume
+        - jButtonPause
+        -jButtonNewGame
+    }
+
+    class Figure {
+        - static byte[][][] PATTERN
+        - static Color[] COLORS
+        - int type
+        - int[][] pat
+        - int x, y, rotation
+        - static Random r
+        - static int nextType
+        - static int nextRot
+        + Figure()
+        + int getX()
+        + int getY()
+        + int getHeight()
+        + int getWidth()
+        + int getCell(int i, int j)
+        + void draw(Graphics g)
+        + void drawNext(Graphics g, int px, int py)
+        + void rotate()
+        + boolean canDown(Glass stakan)
+        + void moveDown()
+        + boolean canLeft(Glass stakan)
+        + boolean canRight(Glass stakan)
+        + boolean canRotate(Glass stakan)
+        + void moveLeft()
+        + void moveRight()
+    }
+
+    interface GamePanel {
+        static final int PLAY
+        static final int STOP
+        static final int PAUSE
+        + void startNewGame()
+        + void pauseGame()
+        + void resumeGame()
+        + void stopGame()
+        + int getScore()
+        + int getState()
+        + void figureMoveRight()
+        + void figureMoveLeft()
+        + void figureMoveDown()
+        + void figureRotate()
+        + void gamePauseResume()
+    }
+
+    class Glass {
+        - int[] x
+        - int[] y
+        - int[][] cells
+        + Glass()
+        + void clearGlass()
+        + int getHeight()
+        + int getWidth()
+        + int getCell(int i, int j)
+        + void draw(Graphics g)
+        + void drawCell(Graphics g, int i, int j)
+        + int acceptFigure(Figure f)
+        - int clearFullLines()
+    }
+
+    class Tetris {
+        + static void main(String[] args) throws InterruptedException
+    }
+
+    class TetrisFrame {
+        + TetrisFrame()
+        + void initComponents()
+        - void tetrisGamePanel1KeyPressed(java.awt.event.KeyEvent evt)
+        - void menuNewGame1ActionPerformed(java.awt.event.ActionEvent evt)
+        - void menuPauseGame1ActionPerformed(java.awt.event.ActionEvent evt)
+        - void menuFileExit1ActionPerformed(java.awt.event.ActionEvent evt)
+        + void continueButtonPressed(java.awt.event.ActionEvent evt)
+        + void pauseButtonPressed(java.awt.event.ActionEvent evt)
+        + void newgameButtonPressed(java.awt.event.ActionEvent evt)
+        -buttonPanel1
+        -jMenu1
+        -jMenu2
+        -jSeparator1
+        -jSeparator2
+        -menuBar
+        -menuBar1
+        -menuFileExit
+        -menuFileExit1
+        -menuNewGame
+        -menuNewGame1
+        -menuPauseGame
+        -menuPauseGame1
+        -tetrisGamePanel1
+    }
+
+    class TetrisGamePanel implements GamePanel {
+        - Glass stakan
+        - Figure fig
+        - int score
+        - int gameState
+        - int[] DELAY
+        - int level
+        - Timer t
+        + TetrisGamePanel()
+        + void paintComponent(Graphics g)
+        + int getScore()
+        + void startNewGame()
+        + void pauseGame()
+        + void resumeGame()
+        + void stopGame()
+        + int getState()
+        + void figureMoveRight()
+        + void figureMoveLeft()
+        + void figureMoveDown()
+        + void figureRotate()
+        + void gamePauseResume()
+        + void actionPerformed(ActionEvent e)
+
+    }
+
+    ButtonPanel --> TetrisFrame
+    TetrisGamePanel --> Glass
+    TetrisGamePanel --> Figure
+
+
+
+@enduml
